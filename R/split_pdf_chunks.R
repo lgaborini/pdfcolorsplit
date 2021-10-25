@@ -1,6 +1,6 @@
 #' Split a PDF to a color PDF and a B&W PDF
 #'
-#' @param df_sheets tidy sheet dataframe, as returned by `[tidy_pdf_pages()]`
+#' @param df_pages tidy sheet dataframe, as returned by `[tidy_pdf_pages()]`
 #' @param pdf input PDF to split
 #' @param filename_output a template for the output PDF files
 #' @param output_dir if not NULL, the directory that will contain the PDFs
@@ -13,14 +13,14 @@
 #' f <- example_pdf()
 #'
 #' # Get sheet/color information
-#' df_sheets <- f %>%
+#' df_pages <- f %>%
 #'    tidy_pdf_pages(double_sided = TRUE)
 #'
 #' # Output files here
 #' dir_temp <- tempdir()
 #'
 #' # Split
-#' f_split <- df_sheets %>%
+#' f_split <- df_pages %>%
 #'    split_pdf_chunks(
 #'       pdf = f,
 #'       output_dir = dir_temp
@@ -31,15 +31,14 @@
 #' fs::file_show(dir_temp)
 #' }
 #'
-split_pdf_chunks <- function(df_sheets, pdf, filename_output = "{output_dir}/{filename}_{color}.pdf", output_dir = NULL) {
+split_pdf_chunks <- function(df_pages, pdf, filename_output = "{output_dir}/{filename}_{color}.pdf", output_dir = NULL) {
 
-   stopifnot(is.data.frame(df_sheets))
-   stopifnot(all(c("page", "is_color_page") %in% colnames(df_sheets)))
+   stopifnot(is.data.frame(df_pages))
+   stopifnot(all(c("page", "is_color_page") %in% colnames(df_pages)))
 
    # Retrieve chunks
    # A chunk is a set of sheets that must be all printed in color or B&W.
-
-   df_chunks <- group_sheets_chunks(df_sheets)
+   df_chunks <- group_sheets_chunks(df_pages)
 
    # Summarize chunks with page and color information
    # One row per chunk
@@ -70,7 +69,7 @@ split_pdf_chunks <- function(df_sheets, pdf, filename_output = "{output_dir}/{fi
 
    # Safety check: no pages are lost
    stopifnot(
-      setequal(unlist(df_pdf_split$pages_all), df_sheets$page)
+      setequal(unlist(df_pdf_split$pages_all), df_pages$page)
    )
 
    # Build output file -------------------------------------------------------
