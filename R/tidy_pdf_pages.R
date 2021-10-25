@@ -6,9 +6,10 @@
 #' @return a tibble with columns:
 #' - page: page number
 #' - sheet: sheet number
-#' - side: "front" or "back"
-#' - img: a magick image
+#' - side: the side of the page in the sheet: "front" or "back"
+#' - img: a {magick} image
 #' - is_color_page: TRUE if the page is in color
+#' - is_color_sheet: TRUE if a page of the sheet is in color
 #' @inheritParams render_page
 #' @inheritParams enumerate_pages
 #' @export
@@ -80,6 +81,14 @@ tidy_pdf_pages <- function(
       ) %>%
       dplyr::select(-is_color_page_method)
 
-   df_pages
+   # Detect color in sheets
+   df_sheets <- df_pages %>%
+      dplyr::group_by(sheet) %>%
+      dplyr::mutate(
+         is_color_sheet = any(is_color_page)
+      ) %>%
+      dplyr::ungroup()
+
+   df_sheets
 }
 
