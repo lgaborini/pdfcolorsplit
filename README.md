@@ -14,7 +14,8 @@ automatically choose the ink based on the content.
 
 ## Features
 
--   Color detection using {magick}
+-   Color detection using
+    {[magick](https://cran.r-project.org/web/packages/magick/index.html)}
 -   Can deal with single- and double-sided PDFs
 
 ## Installation

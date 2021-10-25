@@ -9,8 +9,8 @@ knitr::opts_chunk$set(
   collapse = TRUE,
   comment = "#>",
   fig.path = "man/figures/README-",
-  out.width = "100%",
-  cache = TRUE
+  cache = TRUE,
+  out.width = "100%"
 )
 ```
 
@@ -25,7 +25,7 @@ This is useful when one must print a document, but the printer does not automati
 
 ## Features
 
-- Color detection using {magick}
+- Color detection using {[magick](https://cran.r-project.org/web/packages/magick/index.html)}
 - Can deal with single- and double-sided PDFs
 
 ## Installation
@@ -46,7 +46,7 @@ devtools::load_all(".")
 ```
 
 
-```{r, cache=TRUE, eval=-1}
+```{r tidy-pdf, cache=TRUE, eval=-1}
 library(pdfcolorsplit)
 
 f_pdf_local <- "assets/rmarkdown-cookbook.pdf"
@@ -73,7 +73,7 @@ df_pages %>%
 
 Show one random color page:
 
-```{r}
+```{r img-sample}
 df_pages %>% 
    dplyr::filter(is_color_page) %>% 
    dplyr::slice_head(n = 1) %>% 
