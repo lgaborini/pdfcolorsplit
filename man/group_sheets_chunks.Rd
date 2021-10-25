@@ -20,7 +20,7 @@ A chunk is a set of sheets that must be all printed in color or B&W.
 df_pages <- example_pdf() \%>\%
    tidy_pdf_pages(double_sided = TRUE)
 
-df_sheets <- df_pages \%>\%
+df_chunks <- df_pages \%>\%
    group_sheets_chunks()
 
 }

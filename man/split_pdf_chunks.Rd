@@ -5,14 +5,14 @@
 \title{Split a PDF to a color PDF and a B&W PDF}
 \usage{
 split_pdf_chunks(
-  df_sheets,
+  df_pages,
   pdf,
   filename_output = "{output_dir}/{filename}_{color}.pdf",
   output_dir = NULL
 )
 }
 \arguments{
-\item{df_sheets}{tidy sheet dataframe, as returned by `[tidy_pdf_pages()]`}
+\item{df_pages}{tidy sheet dataframe, as returned by `[tidy_pdf_pages()]`}
 
 \item{pdf}{input PDF to split}
 
@@ -31,14 +31,14 @@ Split a PDF to a color PDF and a B&W PDF
 f <- example_pdf()
 
 # Get sheet/color information
-df_sheets <- f \%>\%
+df_pages <- f \%>\%
    tidy_pdf_pages(double_sided = TRUE)
 
 # Output files here
 dir_temp <- tempdir()
 
 # Split
-f_split <- df_sheets \%>\%
+f_split <- df_pages \%>\%
    split_pdf_chunks(
       pdf = f,
       output_dir = dir_temp

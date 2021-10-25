@@ -30,9 +30,10 @@ tidy_pdf_pages(
 a tibble with columns:
 - page: page number
 - sheet: sheet number
-- side: "front" or "back"
-- img: a magick image
+- side: the side of the page in the sheet: "front" or "back"
+- img: a {magick} image
 - is_color_page: TRUE if the page is in color
+- is_color_sheet: TRUE if a page of the sheet is in color
 }
 \description{
 Extract page, sheet, color information from a PDF

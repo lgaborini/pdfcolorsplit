@@ -3,7 +3,7 @@ Package: pdfcolorsplit
 Title: What the Package Does (Title Case)
 Version: 0.1.0
 Author: Lorenzo Gaborini
-Maintainer: Lorenzo Gaborini
+Maintainer: Lorenzo Gaborini <lorenzo.gaborini@gmail.com>
 Description: R package to separate color/B&W pages from a PDF.
 License: MIT + file LICENSE
 Imports: 

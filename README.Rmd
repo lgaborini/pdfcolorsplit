@@ -1,0 +1,99 @@
+---
+output: github_document
+---
+
+<!-- README.md is generated from README.Rmd. Please edit that file -->
+
+```{r, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>",
+  fig.path = "man/figures/README-",
+  out.width = "100%",
+  cache = TRUE
+)
+```
+
+# pdfcolorsplit
+
+<!-- badges: start -->
+<!-- badges: end -->
+
+{pdfcolorsplit} is an utility to split a PDF file into a file containing color sheets, and a file containing B&W sheets.
+
+This is useful when one must print a document, but the printer does not automatically choose the ink based on the content.
+
+## Features
+
+- Color detection using {magick}
+- Can deal with single- and double-sided PDFs
+
+## Installation
+
+The package is not in CRAN yet.  
+You can simply install it from this repository:
+
+```{r, eval=FALSE}
+remotes::install_github("lgaborini/pdfcolorsplit")
+```
+
+## Example
+
+Let's prepare the [R Markdown Cookbook](https://bookdown.org/yihui/rmarkdown-cookbook/) for printing!
+
+```{r, include=FALSE}
+devtools::load_all(".")
+```
+
+
+```{r, cache=TRUE, eval=-1}
+library(pdfcolorsplit)
+
+f_pdf_local <- "assets/rmarkdown-cookbook.pdf"
+
+df_pages <- tidy_pdf_pages(
+   pdf = f_pdf_local,
+   double_sided = TRUE
+)
+```
+
+How many pages must be printed in color?
+
+```{r}
+df_pages %>% 
+   dplyr::count(is_color_page)
+```
+
+How many SHEETS must be printed in color? (this is the actual printing cost)
+
+```{r}
+df_pages %>% 
+   dplyr::count(is_color_sheet)
+```
+
+Show one random color page:
+
+```{r}
+df_pages %>% 
+   dplyr::filter(is_color_page) %>% 
+   dplyr::slice_head(n = 1) %>% 
+   dplyr::pull(img)
+```
+
+Split in two parts:
+
+```{r, eval=FALSE}
+
+# The directory that will contain the files
+output_dir <- tempdir()
+
+df_pages %>% 
+   split_pdf_chunks(
+      pdf = f_pdf_local,
+      output_dir = output_dir
+   )
+
+```
+
+
+
