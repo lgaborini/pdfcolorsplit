@@ -10,27 +10,20 @@
 #' df_pages <- example_pdf() %>%
 #'    tidy_pdf_pages(double_sided = TRUE)
 #'
-#' df_sheets <- df_pages %>%
+#' df_chunks <- df_pages %>%
 #'    group_sheets_chunks()
 #'
 group_sheets_chunks <- function(df_pages) {
 
    stopifnot(is.data.frame(df_pages))
    stopifnot(all(
-      c("sheet", "is_color_page") %in% colnames(df_pages)
+      c("is_color_sheet") %in% colnames(df_pages)
    ))
 
-   df_sheets <- df_pages %>%
-      dplyr::group_by(sheet) %>%
-      dplyr::mutate(
-         is_color_sheet = any(is_color_page)
-      ) %>%
-      dplyr::ungroup()
-
-   df_sheets <- df_sheets %>%
+   df_chunks <- df_pages %>%
       dplyr::mutate(
          chunk = data.table::rleid(is_color_sheet)
       )
 
-   df_sheets
+   df_chunks
 }
